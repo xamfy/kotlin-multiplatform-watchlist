@@ -49,6 +49,8 @@ data class Movie(
     val title: String,
     @SerialName("description")
     val description: String,
+    @SerialName("genre")
+    val genre: String,
     @SerialName("imageUrl")
     val imageUrl: String
 )

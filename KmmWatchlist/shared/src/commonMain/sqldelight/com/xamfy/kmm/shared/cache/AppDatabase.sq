@@ -17,6 +17,10 @@ selectMovieById:
 SELECT * FROM Movie
 WHERE id = ?;
 
+selectAllMovies:
+SELECT *
+FROM Movie;
+
 CREATE TABLE Launch (
     flightNumber INTEGER NOT NULL,
     missionName TEXT NOT NULL,

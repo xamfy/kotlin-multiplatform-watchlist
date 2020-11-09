@@ -1,9 +1,9 @@
 package com.xamfy.kmm.shared.cache
 
-import com.xamfy.kmm.shared.cache.AppDatabase
 import com.xamfy.kmm.shared.entity.Links
 import com.xamfy.kmm.shared.entity.Rocket
 import com.xamfy.kmm.shared.entity.RocketLaunch
+import com.xamfy.kmm.shared.entity.Movie
 
 internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = AppDatabase(databaseDriverFactory.createDriver())
@@ -19,6 +19,20 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     internal fun getAllLaunches(): List<RocketLaunch> {
         return dbQuery.selectAllLaunchesInfo(::mapLaunchSelecting).executeAsList()
+    }
+
+    internal fun getAllMovies(): List<Movie> {
+        return dbQuery.selectAllMovies(::mapMovieSelecting).executeAsList()
+    }
+
+    private fun mapMovieSelecting(
+        id: String,
+        title: String,
+        description: String,
+        genre: String,
+        imageUrl: String
+    ): Movie {
+        return Movie(id, title, description, genre, imageUrl)
     }
 
     private fun mapLaunchSelecting(
