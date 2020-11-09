@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.xamfy.kmm.shared.Greeting
-import com.xamfy.kmm.shared.SpaceXSDK
+import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBarView: FrameLayout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    private val sdk = SpaceXSDK(DatabaseDriverFactory(this))
+    private val sdk = WatchlistSDK(DatabaseDriverFactory(this))
 
     private val launchesRvAdapter = LaunchesRvAdapter(listOf())
 

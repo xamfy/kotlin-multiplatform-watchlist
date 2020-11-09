@@ -40,3 +40,15 @@ data class Links(
     @SerialName("article_link")
     val articleUrl: String?
 )
+
+@Serializable
+data class Movie(
+    @SerialName("id")
+    val id: String,
+    @SerialName("title")
+    val title: String,
+    @SerialName("description")
+    val description: String,
+    @SerialName("imageUrl")
+    val imageUrl: String
+)

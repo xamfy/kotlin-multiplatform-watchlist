@@ -1,3 +1,22 @@
+CREATE TABLE Movie (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    genre TEXT NOT NULL,
+    imageUrl TEXT NOT NULL
+);
+
+insertMovie:
+INSERT INTO Movie(id, title, description, genre, imageUrl)
+VALUES(?, ?, ?, ?, ?);
+
+removeAllMovies:
+DELETE FROM Movie;
+
+selectMovieById:
+SELECT * FROM Movie
+WHERE id = ?;
+
 CREATE TABLE Launch (
     flightNumber INTEGER NOT NULL,
     missionName TEXT NOT NULL,

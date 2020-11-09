@@ -13,6 +13,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         dbQuery.transaction {
             dbQuery.removeAllRockets()
             dbQuery.removeAllLaunches()
+            dbQuery.removeAllMovies()
         }
     }
 
@@ -64,6 +65,24 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
                 insertLaunch(launch)
             }
         }
+    }
+
+    internal fun createMovies(movies: List<Movie>) {
+        dbQuery.transaction {
+            movies.forEach { movie ->
+                insertMovie(movie)
+            }
+        }
+    }
+
+    private fun insertMovie(movie: Movie) {
+        dbQuery.insertMovie(
+            id = movie.id,
+            title = movie.title,
+            description = movie.description,
+            genre = movie.genre,
+            imageUrl = movie.imageUrl
+        )
     }
 
     private fun insertRocket(launch: RocketLaunch) {
