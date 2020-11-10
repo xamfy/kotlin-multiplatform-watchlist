@@ -43,7 +43,7 @@ data class Links(
 
 @Serializable
 data class Movie(
-    @SerialName("id")
+    @SerialName("_id")
     val id: String,
     @SerialName("title")
     val title: String,
