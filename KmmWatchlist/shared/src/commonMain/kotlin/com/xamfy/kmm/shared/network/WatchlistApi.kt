@@ -8,6 +8,8 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
 
+import com.xamfy.kmm.BuildKonfig
+
 class WatchlistApi {
     private val httpClient = HttpClient {
         install(JsonFeature) {
@@ -30,7 +32,9 @@ class WatchlistApi {
 
     companion object {
         private const val LAUNCHES_ENDPOINT = "https://api.spacexdata.com/v3/launches"
-        private const val MOVIES_ENDPOINT = "BASE_URL/movies"
+        private val BASE_URL = BuildKonfig.baseURL
+        private val MOVIES_ENDPOINT = "${BASE_URL}/movies"
+        private val WATCHLIST_ENDPOINT = "${BASE_URL}/watchlist"
     }
 }
 
