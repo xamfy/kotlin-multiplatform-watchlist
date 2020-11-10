@@ -22,33 +22,42 @@ fun greet(): String {
 class MainActivity : AppCompatActivity() {
     private val mainScope = MainScope()
 
-    private lateinit var launchesRecyclerView: RecyclerView
+//    private lateinit var launchesRecyclerView: RecyclerView
+    private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var progressBarView: FrameLayout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private val sdk = WatchlistSDK(DatabaseDriverFactory(this))
 
     private val launchesRvAdapter = LaunchesRvAdapter(listOf())
+    private val moviesRvAdapter = MoviesRvAdapter(listOf())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        title = "SpaceX Launches"
+        title = "Movies"
         setContentView(R.layout.activity_main)
 
-        launchesRecyclerView = findViewById(R.id.launchesListRv)
+//        launchesRecyclerView = findViewById(R.id.launchesListRv)
+        moviesRecyclerView = findViewById(R.id.moviesListRv)
+
         progressBarView = findViewById(R.id.progressBar)
         swipeRefreshLayout = findViewById(R.id.swipeContainer)
 
-        launchesRecyclerView.adapter = launchesRvAdapter
-        launchesRecyclerView.layoutManager = LinearLayoutManager(this)
+//        launchesRecyclerView.adapter = launchesRvAdapter
+//        launchesRecyclerView.layoutManager = LinearLayoutManager(this)
+        moviesRecyclerView.adapter = moviesRvAdapter
+        moviesRecyclerView.layoutManager = LinearLayoutManager(this)
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
-            displayLaunches(true)
+//            displayLaunches(true)
+            displayMovies(true)
         }
 
-        displayLaunches(false)
+//        displayLaunches(false)
+        displayMovies(false)
 
 //        val tv: TextView = findViewById(R.id.text_view)
 //        tv.text = greet()
@@ -59,14 +68,29 @@ class MainActivity : AppCompatActivity() {
         mainScope.cancel()
     }
 
-    private fun displayLaunches(needReload: Boolean) {
+//    private fun displayLaunches(needReload: Boolean) {
+//        progressBarView.isVisible = true
+//        mainScope.launch {
+//            kotlin.runCatching {
+//                sdk.getLaunches(needReload)
+//            }.onSuccess {
+//                launchesRvAdapter.launches = it
+//                launchesRvAdapter.notifyDataSetChanged()
+//            }.onFailure {
+//                Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+//            }
+//            progressBarView.isVisible = false
+//        }
+//    }
+
+    private fun displayMovies(needReload: Boolean) {
         progressBarView.isVisible = true
         mainScope.launch {
             kotlin.runCatching {
-                sdk.getLaunches(needReload)
+                sdk.getMovies(needReload)
             }.onSuccess {
-                launchesRvAdapter.launches = it
-                launchesRvAdapter.notifyDataSetChanged()
+                moviesRvAdapter.movies = it
+                moviesRvAdapter.notifyDataSetChanged()
             }.onFailure {
                 Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
