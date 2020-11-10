@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
 import com.xamfy.kmm.shared.entity.Movie
 
 class MoviesRvAdapter(var movies: List<Movie>) :
@@ -19,7 +21,11 @@ class MoviesRvAdapter(var movies: List<Movie>) :
         private val movieGenreTextView = itemView.findViewById<TextView>(R.id.movieGenre)
 
         fun bindData(movie: Movie) {
-            movieImageView.load(movie.imageUrl)
+            movieImageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            movieImageView.load(movie.imageUrl) {
+//                crossfade(750)
+//                scale(Scale.FILL)
+            }
             movieTitleTextView.text = movie.title
             movieDescTextView.text = movie.description
             movieGenreTextView.text = movie.genre
