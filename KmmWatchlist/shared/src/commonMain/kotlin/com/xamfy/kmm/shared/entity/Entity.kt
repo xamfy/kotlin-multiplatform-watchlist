@@ -61,6 +61,16 @@ data class Watchlist(
     val id: String,
     @SerialName("name")
     val name: String,
-//    @SerialName("movies")
-//    val description: List<Movie>,
+    @SerialName("movies")
+    val movies: List<String>,
+)
+
+@Serializable
+data class WatchlistDetail(
+    @SerialName("_id")
+    val id: String,
+    @SerialName("name")
+    val name: String,
+    @SerialName("movies")
+    val movies: List<Movie>,
 )

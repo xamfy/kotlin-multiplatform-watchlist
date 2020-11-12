@@ -5,6 +5,7 @@ import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
 import com.xamfy.kmm.shared.entity.Movie
 import com.xamfy.kmm.shared.entity.RocketLaunch
 import com.xamfy.kmm.shared.entity.Watchlist
+import com.xamfy.kmm.shared.entity.WatchlistDetail
 import com.xamfy.kmm.shared.network.WatchlistApi
 
 class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
@@ -39,7 +40,7 @@ class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
         return api.getAllWatchlists()
     }
 
-    @Throws(Exception::class) suspend fun getMoviesInWatchlist(watchlistId: String): List<Movie> {
+    @Throws(Exception::class) suspend fun getMoviesInWatchlist(watchlistId: String): WatchlistDetail {
         return api.getMoviesInWatchlist(watchlistId)
     }
 }

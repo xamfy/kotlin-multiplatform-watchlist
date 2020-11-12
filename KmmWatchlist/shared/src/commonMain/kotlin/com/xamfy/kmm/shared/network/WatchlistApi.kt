@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 
 import com.xamfy.kmm.BuildKonfig
 import com.xamfy.kmm.shared.entity.Watchlist
+import com.xamfy.kmm.shared.entity.WatchlistDetail
 import io.ktor.http.*
 
 class WatchlistApi {
@@ -32,7 +33,7 @@ class WatchlistApi {
         return httpClient.get(WATCHLIST_ENDPOINT)
     }
 
-    suspend fun getMoviesInWatchlist(watchlistId: String): List<Movie> {
+    suspend fun getMoviesInWatchlist(watchlistId: String): WatchlistDetail {
         return httpClient.get("$WATCHLIST_ENDPOINT/$watchlistId")
     }
 

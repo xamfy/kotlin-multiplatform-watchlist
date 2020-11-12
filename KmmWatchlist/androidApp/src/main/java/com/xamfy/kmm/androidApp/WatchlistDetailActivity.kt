@@ -49,7 +49,7 @@ class WatchlistDetailActivity : AppCompatActivity() {
             kotlin.runCatching {
                 sdk.getMoviesInWatchlist(watchlistId)
             }.onSuccess {
-                moviesRvAdapter.movies = it
+                moviesRvAdapter.movies = it.movies
                 moviesRvAdapter.notifyDataSetChanged()
             }.onFailure {
                 Toast.makeText(this@WatchlistDetailActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
