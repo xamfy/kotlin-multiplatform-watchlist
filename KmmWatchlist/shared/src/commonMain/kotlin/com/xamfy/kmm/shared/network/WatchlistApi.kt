@@ -9,6 +9,8 @@ import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
 
 import com.xamfy.kmm.BuildKonfig
+import com.xamfy.kmm.shared.entity.Watchlist
+import io.ktor.http.*
 
 class WatchlistApi {
     private val httpClient = HttpClient {
@@ -26,8 +28,21 @@ class WatchlistApi {
         return httpClient.get(MOVIES_ENDPOINT)
     }
 
-    suspend fun addMovieToWatchlist() {
-        // TODO
+    suspend fun getAllWatchlists(): List<Watchlist> {
+        return httpClient.get(WATCHLIST_ENDPOINT)
+    }
+
+    suspend fun getMoviesInWatchlist(watchlistId: String): List<Movie> {
+        return httpClient.get("$WATCHLIST_ENDPOINT/$watchlistId")
+    }
+
+    suspend fun addMovieToWatchlist(watchlistId: String, movieId: String) {
+        val message = httpClient.post<String> {
+            url("$WATCHLIST_ENDPOINT/add")
+            contentType(ContentType.Application.Json)
+            body = AddMovie(watchlistId, movieId)
+        }
+        println("CLIENT: Message from the server: $message")
     }
 
     companion object {
@@ -38,3 +53,4 @@ class WatchlistApi {
     }
 }
 
+data class AddMovie(val watchlistId: String, val movieId: String)

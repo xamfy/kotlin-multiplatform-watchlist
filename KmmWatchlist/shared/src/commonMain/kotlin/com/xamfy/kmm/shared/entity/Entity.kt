@@ -54,3 +54,13 @@ data class Movie(
     @SerialName("imageUrl")
     val imageUrl: String
 )
+
+@Serializable
+data class Watchlist(
+    @SerialName("_id")
+    val id: String,
+    @SerialName("name")
+    val name: String,
+//    @SerialName("movies")
+//    val description: List<Movie>,
+)
