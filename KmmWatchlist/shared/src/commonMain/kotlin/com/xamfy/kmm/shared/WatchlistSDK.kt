@@ -2,17 +2,16 @@ package com.xamfy.kmm.shared
 
 import com.xamfy.kmm.shared.cache.Database
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
-import com.xamfy.kmm.shared.entity.Movie
-import com.xamfy.kmm.shared.entity.RocketLaunch
-import com.xamfy.kmm.shared.entity.Watchlist
-import com.xamfy.kmm.shared.entity.WatchlistDetail
+import com.xamfy.kmm.shared.entity.*
 import com.xamfy.kmm.shared.network.WatchlistApi
+import io.ktor.http.*
 
-class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
+class WatchlistSDK(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = Database(databaseDriverFactory)
     private val api = WatchlistApi()
 
-    @Throws(Exception::class) suspend fun getLaunches(forceReload: Boolean): List<RocketLaunch> {
+    @Throws(Exception::class)
+    suspend fun getLaunches(forceReload: Boolean): List<RocketLaunch> {
         val cachedLaunches = database.getAllLaunches()
         return if (cachedLaunches.isNotEmpty() && !forceReload) {
             cachedLaunches
@@ -24,7 +23,8 @@ class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
         }
     }
 
-    @Throws(Exception::class) suspend fun getMovies(forceReload: Boolean): List<Movie> {
+    @Throws(Exception::class)
+    suspend fun getMovies(forceReload: Boolean): List<Movie> {
         val cachedMovies = database.getAllMovies()
         return if (cachedMovies.isNotEmpty() && !forceReload) {
             cachedMovies
@@ -36,11 +36,18 @@ class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
         }
     }
 
-    @Throws(Exception::class) suspend fun getWatchlists(): List<Watchlist> {
+    @Throws(Exception::class)
+    suspend fun getWatchlists(): List<Watchlist> {
         return api.getAllWatchlists()
     }
 
-    @Throws(Exception::class) suspend fun getMoviesInWatchlist(watchlistId: String): WatchlistDetail {
+    @Throws(Exception::class)
+    suspend fun getMoviesInWatchlist(watchlistId: String): WatchlistDetail {
         return api.getMoviesInWatchlist(watchlistId)
+    }
+
+    @Throws(Exception::class)
+    suspend fun deleteMovieFromWatchlist(watchlistId: String, movieId: String): WatchlistResponse {
+        return api.deleteMovieFromWatchlist(watchlistId, movieId)
     }
 }

@@ -126,5 +126,6 @@ class MainActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListene
     override fun onPopupMenuItemClick(position: Int) {
         val movieId = movies[position].id
         Toast.makeText(this@MainActivity, movieId, Toast.LENGTH_SHORT).show()
+        // show watchlists in a dialog or activity
     }
 }

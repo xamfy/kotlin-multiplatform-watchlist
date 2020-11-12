@@ -1,5 +1,6 @@
 package com.xamfy.kmm.shared.entity
 
+import io.ktor.http.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -73,4 +74,20 @@ data class WatchlistDetail(
     val name: String,
     @SerialName("movies")
     val movies: List<Movie>,
+)
+
+@Serializable
+data class WatchlistResponse(
+    @SerialName("status_code")
+    val statusCode: Int,
+    @SerialName("message")
+    val message: String,
+)
+
+@Serializable
+data class MovieRequest(
+    @SerialName("watchlistId")
+    val watchlistId: String,
+    @SerialName("movieId")
+    val movieId: String,
 )

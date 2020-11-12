@@ -1,17 +1,13 @@
 package com.xamfy.kmm.shared.network
 
-import com.xamfy.kmm.shared.entity.Movie
-import com.xamfy.kmm.shared.entity.RocketLaunch
-import io.ktor.client.HttpClient
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.request.*
-import kotlinx.serialization.json.Json
-
 import com.xamfy.kmm.BuildKonfig
-import com.xamfy.kmm.shared.entity.Watchlist
-import com.xamfy.kmm.shared.entity.WatchlistDetail
+import com.xamfy.kmm.shared.entity.*
+import io.ktor.client.*
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.serialization.json.Json
 
 class WatchlistApi {
     private val httpClient = HttpClient {
@@ -41,9 +37,19 @@ class WatchlistApi {
         val message = httpClient.post<String> {
             url("$WATCHLIST_ENDPOINT/add")
             contentType(ContentType.Application.Json)
-            body = AddMovie(watchlistId, movieId)
+            body = MovieRequest(watchlistId, movieId)
         }
         println("CLIENT: Message from the server: $message")
+    }
+
+    suspend fun deleteMovieFromWatchlist(watchlistId: String, movieId: String): WatchlistResponse {
+        val response = httpClient.delete<WatchlistResponse> {
+            url("$WATCHLIST_ENDPOINT/delete")
+            contentType(ContentType.Application.Json)
+            body = MovieRequest(watchlistId, movieId)
+        }
+//        println("CLIENT: Message from the server: $message")
+        return response
     }
 
     companion object {
@@ -53,5 +59,3 @@ class WatchlistApi {
         private val WATCHLIST_ENDPOINT = "${BASE_URL}/watchlist"
     }
 }
-
-data class AddMovie(val watchlistId: String, val movieId: String)
