@@ -1,4 +1,4 @@
-package com.xamfy.kmm.androidApp
+package com.xamfy.kmm.androidApp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.size.Scale
-import coil.transform.CircleCropTransformation
+import com.xamfy.kmm.androidApp.R
 import com.xamfy.kmm.shared.entity.Movie
 
 class MoviesRvAdapter(var movies: List<Movie>) :

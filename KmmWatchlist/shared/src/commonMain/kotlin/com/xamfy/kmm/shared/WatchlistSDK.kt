@@ -38,4 +38,8 @@ class WatchlistSDK (databaseDriverFactory: DatabaseDriverFactory) {
     @Throws(Exception::class) suspend fun getWatchlists(): List<Watchlist> {
         return api.getAllWatchlists()
     }
+
+    @Throws(Exception::class) suspend fun getMoviesInWatchlist(watchlistId: String): List<Movie> {
+        return api.getMoviesInWatchlist(watchlistId)
+    }
 }

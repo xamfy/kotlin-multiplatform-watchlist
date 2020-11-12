@@ -12,6 +12,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.xamfy.kmm.androidApp.adapters.LaunchesRvAdapter
+import com.xamfy.kmm.androidApp.adapters.MoviesRvAdapter
 import com.xamfy.kmm.shared.Greeting
 import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
