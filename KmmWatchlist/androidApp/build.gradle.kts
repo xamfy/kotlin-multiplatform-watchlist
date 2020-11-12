@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-android-extensions")
+    id("kotlin-android")
 }
 group = "com.xamfy.kmm"
 version = "1.0-SNAPSHOT"
@@ -24,6 +25,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("io.coil-kt:coil:1.0.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
 }
 android {
     compileSdkVersion(30)
