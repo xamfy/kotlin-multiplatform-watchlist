@@ -2,4 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/open_watchlists"
         android:title="Watchlists" />
+    <item android:id="@+id/open_settings"
+        android:title="Settings" />
 </menu>
