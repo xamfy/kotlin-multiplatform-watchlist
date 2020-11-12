@@ -13,10 +13,16 @@ import coil.load
 import com.xamfy.kmm.androidApp.R
 import com.xamfy.kmm.shared.entity.Movie
 
-class MoviesRvAdapter(var movies: List<Movie>) :
+class MoviesRvAdapter(
+    var movies: List<Movie>,
+    private val onPopupMenuItemListener: OnPopupMenuItemListener
+) :
     RecyclerView.Adapter<MoviesRvAdapter.MovieViewHolder>() {
 
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener,
+    inner class MovieViewHolder(
+        itemView: View,
+        private val onPopupMenuItemClickListener: OnPopupMenuItemListener
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
         private val movieImageView = itemView.findViewById<ImageView>(R.id.movieImage)
         private val movieTitleTextView = itemView.findViewById<TextView>(R.id.movieTitle)
@@ -53,9 +59,11 @@ class MoviesRvAdapter(var movies: List<Movie>) :
         }
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
-            return when(item?.itemId) {
+            return when (item?.itemId) {
                 R.id.action_add_to_watchlist -> {
-                    Toast.makeText(itemView.context, movieTitleTextView.text, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, movieTitleTextView.text, Toast.LENGTH_SHORT)
+                        .show()
+                    onPopupMenuItemClickListener.onPopupMenuItemClick(adapterPosition)
                     true
                 }
                 else -> false
@@ -64,9 +72,13 @@ class MoviesRvAdapter(var movies: List<Movie>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return LayoutInflater.from(parent.context)
+//        return LayoutInflater.from(parent.context)
+//            .inflate(R.layout.item_movie, parent, false)
+//            .run(::MovieViewHolder)
+
+        val view =  LayoutInflater.from(parent.context)
             .inflate(R.layout.item_movie, parent, false)
-            .run(::MovieViewHolder)
+        return MovieViewHolder(view, onPopupMenuItemListener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -74,4 +86,8 @@ class MoviesRvAdapter(var movies: List<Movie>) :
     }
 
     override fun getItemCount(): Int = movies.count()
+
+    interface OnPopupMenuItemListener {
+        fun onPopupMenuItemClick(position: Int)
+    }
 }

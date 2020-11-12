@@ -9,15 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xamfy.kmm.androidApp.adapters.MoviesRvAdapter
 import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
+import com.xamfy.kmm.shared.entity.Movie
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class WatchlistDetailActivity : AppCompatActivity() {
+class WatchlistDetailActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListener {
     private val mainScope = MainScope()
 
     private lateinit var moviesRecyclerView: RecyclerView
-    private val moviesRvAdapter = MoviesRvAdapter(listOf())
+    private val moviesRvAdapter = MoviesRvAdapter(listOf(), this)
+    private var movies = listOf<Movie>()
 
     private val sdk = WatchlistSDK(DatabaseDriverFactory(this))
 
@@ -50,10 +52,16 @@ class WatchlistDetailActivity : AppCompatActivity() {
                 sdk.getMoviesInWatchlist(watchlistId)
             }.onSuccess {
                 moviesRvAdapter.movies = it.movies
+                movies = it.movies
                 moviesRvAdapter.notifyDataSetChanged()
             }.onFailure {
                 Toast.makeText(this@WatchlistDetailActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onPopupMenuItemClick(position: Int) {
+        val movieId = movies[position].id
+        Toast.makeText(this@WatchlistDetailActivity, movieId, Toast.LENGTH_SHORT).show()
     }
 }

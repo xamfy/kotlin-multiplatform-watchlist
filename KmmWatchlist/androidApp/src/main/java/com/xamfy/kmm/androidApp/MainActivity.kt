@@ -17,6 +17,8 @@ import com.xamfy.kmm.androidApp.adapters.MoviesRvAdapter
 import com.xamfy.kmm.shared.Greeting
 import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
+import com.xamfy.kmm.shared.entity.Movie
+import com.xamfy.kmm.shared.entity.Watchlist
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -25,7 +27,7 @@ fun greet(): String {
     return Greeting().greeting()
 }
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListener {
     private val mainScope = MainScope()
 
 //    private lateinit var launchesRecyclerView: RecyclerView
@@ -36,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     private val sdk = WatchlistSDK(DatabaseDriverFactory(this))
 
     private val launchesRvAdapter = LaunchesRvAdapter(listOf())
-    private val moviesRvAdapter = MoviesRvAdapter(listOf())
-
+    private val moviesRvAdapter = MoviesRvAdapter(listOf(), this)
+    private var movies = listOf<Movie>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 sdk.getMovies(needReload)
             }.onSuccess {
                 moviesRvAdapter.movies = it
+                movies = it
                 moviesRvAdapter.notifyDataSetChanged()
             }.onFailure {
                 Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -119,5 +122,10 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPopupMenuItemClick(position: Int) {
+        val movieId = movies[position].id
+        Toast.makeText(this@MainActivity, movieId, Toast.LENGTH_SHORT).show()
     }
 }
