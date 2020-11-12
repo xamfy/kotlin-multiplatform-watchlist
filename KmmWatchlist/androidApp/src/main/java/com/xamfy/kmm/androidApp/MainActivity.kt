@@ -18,7 +18,6 @@ import com.xamfy.kmm.shared.Greeting
 import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
 import com.xamfy.kmm.shared.entity.Movie
-import com.xamfy.kmm.shared.entity.Watchlist
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ fun greet(): String {
 class MainActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListener {
     private val mainScope = MainScope()
 
-//    private lateinit var launchesRecyclerView: RecyclerView
+    //    private lateinit var launchesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var progressBarView: FrameLayout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout

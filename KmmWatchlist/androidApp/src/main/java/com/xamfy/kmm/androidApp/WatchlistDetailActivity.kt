@@ -3,10 +3,9 @@ package com.xamfy.kmm.androidApp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.xamfy.kmm.androidApp.adapters.MoviesRvAdapter
+import com.xamfy.kmm.androidApp.adapters.WatchlistMoviesRvAdapter
 import com.xamfy.kmm.shared.WatchlistSDK
 import com.xamfy.kmm.shared.cache.DatabaseDriverFactory
 import com.xamfy.kmm.shared.entity.Movie
@@ -14,11 +13,11 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class WatchlistDetailActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListener {
+class WatchlistDetailActivity : AppCompatActivity(), WatchlistMoviesRvAdapter.OnPopupMenuItemListener {
     private val mainScope = MainScope()
 
     private lateinit var moviesRecyclerView: RecyclerView
-    private val moviesRvAdapter = MoviesRvAdapter(listOf(), this)
+    private val moviesRvAdapter = WatchlistMoviesRvAdapter(listOf(), this)
     private var movies = listOf<Movie>()
 
     private val sdk = WatchlistSDK(DatabaseDriverFactory(this))
