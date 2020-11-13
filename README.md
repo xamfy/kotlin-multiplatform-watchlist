@@ -1,5 +1,2 @@
-# kotlin-multiplatform-mobile-apps
-Kotlin Multiplatform Mobile apps
-
-Apps:
-1. [KMM Watchlist](KmmWatchlist)
+# kotlin-multiplatform-watchlist
+Kotlin Multiplatform Watchlist App
