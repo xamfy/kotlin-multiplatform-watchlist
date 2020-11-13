@@ -10,4 +10,7 @@
     <string name="mission_name_field">Launch name: %s</string>
     <string name="launch_success_field">Launch success: %s</string>
     <string name="details_field">Launch details: %s</string>
+    <string name="choose_watchlist">Choose watchlist</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>

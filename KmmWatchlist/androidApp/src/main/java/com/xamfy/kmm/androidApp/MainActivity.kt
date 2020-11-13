@@ -2,6 +2,7 @@ package com.xamfy.kmm.androidApp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xamfy.kmm.androidApp.adapters.LaunchesRvAdapter
 import com.xamfy.kmm.androidApp.adapters.MoviesRvAdapter
 import com.xamfy.kmm.shared.Greeting
@@ -27,6 +29,8 @@ fun greet(): String {
 }
 
 class MainActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListener {
+    private val TAG = "MainActivity"
+
     private val mainScope = MainScope()
 
     //    private lateinit var launchesRecyclerView: RecyclerView
@@ -125,7 +129,64 @@ class MainActivity : AppCompatActivity(), MoviesRvAdapter.OnPopupMenuItemListene
 
     override fun onPopupMenuItemClick(position: Int) {
         val movieId = movies[position].id
-        Toast.makeText(this@MainActivity, movieId, Toast.LENGTH_SHORT).show()
-        // show watchlists in a dialog or activity
+//        Toast.makeText(this@MainActivity, movieId, Toast.LENGTH_SHORT).show()
+
+        mainScope.launch {
+            kotlin.runCatching {
+                sdk.getWatchlists()
+            }.onSuccess {
+                // show watchlists in a dialog or activity
+                val namesWatchlist = mutableListOf<String>()
+                it.forEach { watchlist ->
+                    namesWatchlist.add(watchlist.name)
+                }
+
+                var chosen = -1
+
+                MaterialAlertDialogBuilder(this@MainActivity)
+                    .setTitle(resources.getString(R.string.choose_watchlist))
+                    .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                        // Respond to neutral button press
+                    }
+                    .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
+                        // Respond to positive button press
+//                        Toast.makeText(this@MainActivity, "$which", Toast.LENGTH_SHORT).show()
+                        if (chosen != -1) {
+                            val watchlistId = it[chosen].id
+                            addMovieToWatchlist(watchlistId, movieId)
+                        }
+                    }
+                    // Single-choice items (initialized with checked item)
+                    .setSingleChoiceItems(namesWatchlist.toTypedArray(), -1) { dialog, which ->
+                        // Respond to item chosen
+                        chosen = which
+//                        Toast.makeText(this@MainActivity, "$which", Toast.LENGTH_SHORT).show()
+                    }
+                    .show()
+//                    .setItems(namesWatchlist.toTypedArray()) { dialog, which ->
+//                        // Respond to item chosen
+//                    }
+//                    .show()
+            }.onFailure {
+                Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
     }
+
+    fun addMovieToWatchlist(watchlistId: String, movieId: String) {
+        mainScope.launch {
+            kotlin.runCatching {
+                sdk.addMovieToWatchlist(watchlistId, movieId)
+            }.onSuccess {
+                Toast.makeText(this@MainActivity, "Movie added to watchlist", Toast.LENGTH_SHORT)
+                    .show()
+            }.onFailure {
+                Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                Log.i(TAG, "onPopupMenuItemClick: ${it.localizedMessage}")
+            }
+        }
+    }
+
 }

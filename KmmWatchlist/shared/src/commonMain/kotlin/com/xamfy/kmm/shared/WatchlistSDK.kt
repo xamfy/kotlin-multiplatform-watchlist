@@ -50,4 +50,9 @@ class WatchlistSDK(databaseDriverFactory: DatabaseDriverFactory) {
     suspend fun deleteMovieFromWatchlist(watchlistId: String, movieId: String): WatchlistResponse {
         return api.deleteMovieFromWatchlist(watchlistId, movieId)
     }
+
+    @Throws(Exception::class)
+    suspend fun addMovieToWatchlist(watchlistId: String, movieId: String): WatchlistResponse {
+        return api.addMovieToWatchlist(watchlistId, movieId)
+    }
 }

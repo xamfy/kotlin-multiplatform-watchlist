@@ -33,13 +33,14 @@ class WatchlistApi {
         return httpClient.get("$WATCHLIST_ENDPOINT/$watchlistId")
     }
 
-    suspend fun addMovieToWatchlist(watchlistId: String, movieId: String) {
-        val message = httpClient.post<String> {
+    suspend fun addMovieToWatchlist(watchlistId: String, movieId: String): WatchlistResponse {
+        val response = httpClient.post<WatchlistResponse> {
             url("$WATCHLIST_ENDPOINT/add")
             contentType(ContentType.Application.Json)
             body = MovieRequest(watchlistId, movieId)
         }
-        println("CLIENT: Message from the server: $message")
+//        println("CLIENT: Message from the server: $message")
+        return response
     }
 
     suspend fun deleteMovieFromWatchlist(watchlistId: String, movieId: String): WatchlistResponse {

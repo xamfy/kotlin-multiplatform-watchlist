@@ -61,8 +61,8 @@ class MoviesRvAdapter(
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             return when (item?.itemId) {
                 R.id.action_add_to_watchlist -> {
-                    Toast.makeText(itemView.context, movieTitleTextView.text, Toast.LENGTH_SHORT)
-                        .show()
+//                    Toast.makeText(itemView.context, movieTitleTextView.text, Toast.LENGTH_SHORT)
+//                        .show()
                     onPopupMenuItemClickListener.onPopupMenuItemClick(adapterPosition)
                     true
                 }
